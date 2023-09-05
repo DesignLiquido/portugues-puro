@@ -65,7 +65,6 @@ export default {
     PUDER: "PUDER",
     QUE: "QUE",
     RECOMECE: "RECOMECE",
-    REDEFININDO: "REDEFININDO",
     REPITA: "REPITA",
     RETORNE: "RETORNE",
     SE: "SE",
