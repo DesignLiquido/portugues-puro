@@ -72,5 +72,5 @@ export const palavrasReservadas = {
     UNS: tiposDeSimbolos.UNS,
     UMA: tiposDeSimbolos.UMA,
     UMAS: tiposDeSimbolos.UMAS,
-    USANDO: tiposDeSimbolos.USANDO"
+    USANDO: tiposDeSimbolos.USANDO
 }
