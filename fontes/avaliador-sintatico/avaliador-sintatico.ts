@@ -1,10 +1,10 @@
-import { Literal } from "./construtos/literal";
-import { Axioma } from "./declaracoes/axioma";
-import { Declaracao } from "./declaracoes/declaracao";
-import { Escreva } from "./declaracoes/escreva";
-import { Simbolo } from "./simbolo";
-import tiposDeSimbolos from "./tipos-de-simbolos";
-import { ErroAvaliadorSintatico } from "./tipos/erro-avaliador-sintatico";
+import { Literal } from "../construtos/literal";
+import { Axioma } from "../declaracoes/axioma";
+import { Declaracao } from "../declaracoes/declaracao";
+import { Escreva } from "../declaracoes/escreva";
+import { Simbolo } from "../simbolo";
+import tiposDeSimbolos from "../tipos-de-simbolos";
+import { ErroAvaliadorSintatico } from "./erro-avaliador-sintatico";
 
 export class AvaliadorSintatico {
     simbolos: Simbolo[];
@@ -75,7 +75,7 @@ export class AvaliadorSintatico {
 
         // TODO: Ponto final é opcional?
         this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
-        
+
         return new Escreva(
             simboloInicial.linha, [
                 new Literal(identificadorOuLiteral)

@@ -1,4 +1,4 @@
-import { Lexador } from '../fontes/lexador';
+import { Lexador } from '../fontes/lexador/lexador';
 
 describe('Lexador', () => {
     let lexador: Lexador;

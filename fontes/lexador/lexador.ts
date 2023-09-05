@@ -1,7 +1,7 @@
-import tiposDeSimbolos from "./tipos-de-simbolos";
-import { ErroLexador } from "./tipos/erro-lexador";
-import { Simbolo } from "./simbolo";
-import { palavrasReservadas } from "./palavras-reservadas";
+import tiposDeSimbolos from "../tipos-de-simbolos";
+import { ErroLexador } from "./erro-lexador";
+import { Simbolo } from "../simbolo";
+import { palavrasReservadas } from "../palavras-reservadas";
 
 /**
  * O Lexador é responsável por transformar o código em uma coleção de tokens de linguagem.
