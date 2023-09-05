@@ -1,0 +1,5 @@
+describe('Lexador', () => {
+    describe('mapear()', () => {
+
+    });
+});
