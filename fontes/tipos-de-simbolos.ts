@@ -25,7 +25,7 @@ export default {
     DUM: "DUM",
     DUNS: "DUNS",
     DUMA: "DUMA",
-    DUMAS</KEYWORDS>: "DUMAS</KEYWORDS>",
+    DUMAS: "DUMAS",
     EM: "EM",
     ESSA: "ESSA",
     ESSAS: "ESSAS",
