@@ -1,9 +1,20 @@
 export default {
     COM: "COM",
     É: "É",
+    IGUAL: "IGUAL",
     ESTRUTURA: "ESTRUTURA",
     IDENTIFICADOR: "IDENTIFICADOR",
     NÚMERO: "NÚMERO",
     UM: "UM",
-    UMA: "UMA"
+    UNS: "UNS",
+    UMA: "UMA",
+    UMAS: "UMAS",
+    O: "O",
+    OS: "OS",
+    A: "A",
+    AS: "AS",
+    PARA: "PARA",
+    RETORNE: "RETORNE",
+    PARE: "PARE",
+    SE: "SE"
 }
