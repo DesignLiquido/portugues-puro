@@ -56,6 +56,7 @@ export default {
     PELA: "PELA",
     PELO: "PELO",
     PODER: "PODER",
+    PONTO: "PONTO",
     POR: "POR",
     PUDER: "PUDER",
     QUE: "QUE",
@@ -73,5 +74,6 @@ export default {
     UNS: "UNS",
     UMA: "UMA",
     UMAS: "UMAS",
-    USANDO: "USANDO"
+    USANDO: "USANDO",
+    VÍRGULA: "VÍRGULA"
 }

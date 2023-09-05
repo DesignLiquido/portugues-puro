@@ -140,7 +140,7 @@ export class Lexador {
     }
 
     identificarPalavraChave(): void {
-        while (this.eAlfabetoOuDigito(this.simbolos[this.atual])) {
+        while (this.eAlfabetoOuDigito(this.codigo[this.linha][this.atual])) {
             this.avancar();
         }
 
@@ -151,13 +151,24 @@ export class Lexador {
         this.adicionarSimbolo(tipo);
     }
 
-    analisarCaractere(): void {
+    analisarCaractereAtual(): void {
         const caractere = this.codigo[this.linha][this.atual];
 
         switch (caractere) {
+            case '.':
+                this.adicionarSimbolo(tiposDeSimbolos.PONTO);
+                this.avancar();
+                break;
             case '"':
                 this.avancar();
                 this.analisarTexto('"');
+                this.avancar();
+                break;
+            // Esta sessão ignora espaços em branco.
+            case ' ':
+            case '\0':
+            case '\r':
+            case '\t':
                 this.avancar();
                 break;
             default:
@@ -182,8 +193,13 @@ export class Lexador {
         this.atual = 0;
         this.linha = 0;
 
+        while (!this.eFinalDoCodigo()) {
+            this.inicioSimbolo = this.atual;
+            this.analisarCaractereAtual();
+        }
+
         return {
-            simbolos: [],
+            simbolos: this.simbolos,
             erros: this.erros
         }
     }
