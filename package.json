@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/DesignLiquido/delegua.git"
+        "url": "git+https://github.com/DesignLiquido/portugues-puro.git"
     },
     "dependencies": {
         "typescript": "^5.2.2"

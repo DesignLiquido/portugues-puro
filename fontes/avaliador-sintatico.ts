@@ -1,5 +1,7 @@
+import { Literal } from "./construtos/literal";
 import { Axioma } from "./declaracoes/axioma";
 import { Declaracao } from "./declaracoes/declaracao";
+import { Escreva } from "./declaracoes/escreva";
 import { Simbolo } from "./simbolo";
 import tiposDeSimbolos from "./tipos-de-simbolos";
 import { ErroAvaliadorSintatico } from "./tipos/erro-avaliador-sintatico";
@@ -66,8 +68,26 @@ export class AvaliadorSintatico {
         return new Axioma(simboloInicial.linha, simboloDefinicao, axiomaDefinidoPor);
     }
 
+    private declaracaoEscreva(): Escreva {
+        const simboloInicial = this.simbolos[this.atual];
+
+        const identificadorOuLiteral = this.consumir(tiposDeSimbolos.TEXTO, `Esperado um texto após "Escreva".`);
+
+        // TODO: Ponto final é opcional?
+        this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
+        
+        return new Escreva(
+            simboloInicial.linha, [
+                new Literal(identificadorOuLiteral)
+            ]
+        );
+    }
+
     private resolverDeclaracao(): any {
         switch (this.simbolos[this.atual].tipo) {
+            case tiposDeSimbolos.ESCREVA:
+                this.avancarEDevolverAnterior();
+                return this.declaracaoEscreva();
             case tiposDeSimbolos.UM:
             case tiposDeSimbolos.UMA:
                 this.avancarEDevolverAnterior();

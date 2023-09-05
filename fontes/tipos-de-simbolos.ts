@@ -26,6 +26,7 @@ export default {
     DUMAS: "DUMAS",
     É: "É",
     EM: "EM",
+    ESCREVA: "ESCREVA",
     ESSA: "ESSA",
     ESSAS: "ESSAS",
     ESSE: "ESSE",

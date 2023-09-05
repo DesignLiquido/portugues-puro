@@ -28,6 +28,7 @@ export const palavrasReservadas = {
     DUMAS: tiposDeSimbolos.DUMAS,
     É: tiposDeSimbolos.É,
     EM: tiposDeSimbolos.EM,
+    ESCREVA: tiposDeSimbolos.ESCREVA,
     ESSA: tiposDeSimbolos.ESSA,
     ESSAS: tiposDeSimbolos.ESSAS,
     ESSE: tiposDeSimbolos.ESSE,

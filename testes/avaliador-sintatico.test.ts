@@ -16,5 +16,11 @@ describe('Avaliador Sintático', () => {
             const resultado = avaliadorSintatico.analisar(resultadoLexador.simbolos);
             expect(resultado).toBeTruthy();
         });
+
+        it('"Escreva "123"."', () => {
+            const resultadoLexador = lexador.mapear(['Escreva "123".']);
+            const resultado = avaliadorSintatico.analisar(resultadoLexador.simbolos);
+            expect(resultado).toBeTruthy();
+        });
     });
 });

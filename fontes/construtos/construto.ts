@@ -2,6 +2,10 @@ import { VisitanteComumInterface } from "../interfaces/visitante-comum-interface
 
 export abstract class Construto {
     linha: number;
-    valor?: any;
+
+    constructor(linha: number) {
+        this.linha = linha;
+    }
+
     abstract aceitar(visitante: VisitanteComumInterface): Promise<any>;
 }
