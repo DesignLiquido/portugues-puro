@@ -2,7 +2,6 @@ export default {
     A: "A",
     AO: "AO",
     AOS: "AOS",
-    BYTES: "BYTES",
     COM: "COM",
     COMECE: "COMECE",
     CONTENDO: "CONTENDO",
