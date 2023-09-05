@@ -3,6 +3,13 @@
     "version": "0.0.0",
     "description": "Implementação em português de linguagem natural como interpretador, seguindo como inspiração o Plain English, criado por Gerry Rzeppa.",
     "main": "index.js",
+    "scripts": {
+        "testes-unitarios": "jest --coverage"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DesignLiquido/delegua.git"
+    },
     "dependencies": {
         "typescript": "^5.2.2"
     },

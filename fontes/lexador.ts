@@ -144,8 +144,7 @@ export class Lexador {
             this.avancar();
         }
 
-        const codigo: string = this.codigo[this.linha].substring(this.inicioSimbolo, this.atual);
-
+        const codigo: string = this.codigo[this.linha].substring(this.inicioSimbolo, this.atual).toUpperCase();
         const tipo: string = codigo in palavrasReservadas ? palavrasReservadas[codigo] : tiposDeSimbolos.IDENTIFICADOR;
 
         this.adicionarSimbolo(tipo);
