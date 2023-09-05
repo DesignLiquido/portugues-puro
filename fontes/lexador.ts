@@ -104,14 +104,14 @@ export class Lexador {
     }
 
     analisarNumero(): void {
-        while (this.eDigito(this.codigo[this.atual])) {
+        while (this.eDigito(this.codigo[this.linha][this.atual])) {
             this.avancar();
         }
 
-        if (this.codigo[this.atual] == '.' && this.eDigito(this.codigo[this.atual + 1])) {
+        if (this.codigo[this.linha][this.atual] == '.' && this.eDigito(this.codigo[this.linha][this.atual + 1])) {
             this.avancar();
 
-            while (this.eDigito(this.codigo[this.atual])) {
+            while (this.eDigito(this.codigo[this.linha][this.atual])) {
                 this.avancar();
             }
         }
@@ -119,6 +119,24 @@ export class Lexador {
         const numeroCompleto = this.codigo[this.linha].substring(this.inicioSimbolo, this.atual);
 
         this.adicionarSimbolo(tiposDeSimbolos.NÚMERO, parseFloat(numeroCompleto));
+    }
+
+    analisarTexto(delimitador = '"'): void {
+        while (this.codigo[this.linha][this.atual] !== delimitador && !this.eFinalDoCodigo()) {
+            this.avancar();
+        }
+
+        if (this.eFinalDoCodigo()) {
+            this.erros.push({
+                linha: this.linha + 1,
+                caractere: this.codigo[this.linha][this.atual - 1],
+                mensagem: 'Texto não finalizado.',
+            } as ErroLexador);
+            return;
+        }
+
+        const valor = this.codigo[this.linha].substring(this.inicioSimbolo + 1, this.atual);
+        this.adicionarSimbolo(tiposDeSimbolos.TEXTO, valor);
     }
 
     identificarPalavraChave(): void {
@@ -134,9 +152,14 @@ export class Lexador {
     }
 
     analisarCaractere(): void {
-        const caractere = this.codigo[this.atual];
+        const caractere = this.codigo[this.linha][this.atual];
 
         switch (caractere) {
+            case '"':
+                this.avancar();
+                this.analisarTexto('"');
+                this.avancar();
+                break;
             default:
                 if (this.eDigito(caractere)) this.analisarNumero();
                 else if (this.eAlfabeto(caractere)) this.identificarPalavraChave();
