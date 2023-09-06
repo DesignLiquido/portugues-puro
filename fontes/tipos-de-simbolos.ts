@@ -2,6 +2,7 @@ export default {
     A: "A",
     AO: "AO",
     AOS: "AOS",
+    ATRIBUA: "ATRIBUA",
     COM: "COM",
     COMECE: "COMECE",
     CONTENDO: "CONTENDO",

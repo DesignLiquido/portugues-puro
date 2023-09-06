@@ -22,5 +22,11 @@ describe('Avaliador Sintático', () => {
             const resultado = avaliadorSintatico.analisar(resultadoLexador.simbolos);
             expect(resultado).toBeTruthy();
         });
+
+        it('"Atribua "123" a um texto."', () => {
+            const resultadoLexador = lexador.mapear(['Atribua "123" a um texto.']);
+            const resultado = avaliadorSintatico.analisar(resultadoLexador.simbolos);
+            expect(resultado).toBeTruthy();
+        });
     });
 });

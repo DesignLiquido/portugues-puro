@@ -4,6 +4,7 @@ export const palavrasReservadas = {
     A: tiposDeSimbolos.A,
     AO: tiposDeSimbolos.AO,
     AOS: tiposDeSimbolos.AOS,
+    ATRIBUA: tiposDeSimbolos.ATRIBUA,
     COM: tiposDeSimbolos.COM,
     COMECE: tiposDeSimbolos.COMECE,
     CONTENDO: tiposDeSimbolos.CONTENDO,

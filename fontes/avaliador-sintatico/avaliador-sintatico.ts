@@ -1,4 +1,5 @@
 import { Literal } from "../construtos/literal";
+import { Atribua } from "../declaracoes/atribua";
 import { Axioma } from "../declaracoes/axioma";
 import { Declaracao } from "../declaracoes/declaracao";
 import { Escreva } from "../declaracoes/escreva";
@@ -83,8 +84,31 @@ export class AvaliadorSintatico {
         );
     }
 
+    private declaracaoAtribua(): Atribua {
+        const simboloInicial = this.simbolos[this.atual];
+
+        const identificadorOuLiteral = this.consumir(tiposDeSimbolos.TEXTO, `Esperado um texto após "Atribua".`);
+
+        this.consumir(tiposDeSimbolos.A, `Esperado "a" após literal ou identificador em declaração "Atribua".`);
+        this.consumir(tiposDeSimbolos.UM, `Esperado "um" após "a" em declaração "Atribua".`);
+
+        const tipoAtribuicao = this.avancarEDevolverAnterior();
+
+        // TODO: Ponto final é opcional?
+        this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
+
+        return new Atribua(
+            simboloInicial.linha,
+            identificadorOuLiteral,
+            tipoAtribuicao
+        );
+    }
+
     private resolverDeclaracao(): any {
         switch (this.simbolos[this.atual].tipo) {
+            case tiposDeSimbolos.ATRIBUA:
+                this.avancarEDevolverAnterior();
+                return this.declaracaoAtribua();
             case tiposDeSimbolos.ESCREVA:
                 this.avancarEDevolverAnterior();
                 return this.declaracaoEscreva();
