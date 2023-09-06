@@ -82,8 +82,10 @@ export class AvaliadorSintatico {
                 // TODO: Ponto final é opcional?
                 this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
                 break;
+            case tiposDeSimbolos.A:
             case tiposDeSimbolos.ESSE:
             case tiposDeSimbolos.ESSA:
+            case tiposDeSimbolos.O:
                 const referenciaConceito = this.avancarEDevolverAnterior();
                 const conceito = this.avancarEDevolverAnterior();
                 construtoArgumento = new ReferenciaContexto(

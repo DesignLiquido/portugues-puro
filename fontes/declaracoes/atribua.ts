@@ -3,6 +3,7 @@ import { Simbolo } from "../simbolo";
 import { Declaracao } from "./declaracao";
 
 export class Atribua extends Declaracao {
+    nome?: Simbolo;
     simboloLiteral: Simbolo;
     simboloTipo: Simbolo;
 
@@ -12,7 +13,7 @@ export class Atribua extends Declaracao {
         this.simboloTipo = simboloTipo;
     }
 
-    aceitar(visitante: VisitanteComumInterface): Promise<any> {
-        throw new Error("Método não implementado.");
+    async aceitar(visitante: VisitanteComumInterface): Promise<any> {
+        return await visitante.visitarDeclaracaoAtribua(this);
     }
 }

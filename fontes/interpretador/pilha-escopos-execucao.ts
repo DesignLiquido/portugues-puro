@@ -187,4 +187,18 @@ export class PilhaEscoposExecucao {
 
         return todasVariaveis;
     }
+
+    obterConceitoEmContexto(nome: string) {
+        for (let i = 1; i <= this.pilha.length - 1; i++) {
+            const contexto = this.pilha[this.pilha.length - i].contexto;
+            if (contexto.hasOwnProperty(nome)) {
+                return contexto[nome];
+            }
+        }
+
+        throw new ErroEmTempoDeExecucao(
+            new Simbolo('especial', nome, nome, -1),
+            "Conceito em contexto não definido: '" + nome + "'."
+        );
+    }
 }

@@ -35,5 +35,16 @@ describe('Interpretador', () => {
 
             expect(retornoSaida).toBe("123");
         });
+
+        it('"Atribua "123" a um texto. Escreva esse texto."', async () => {
+            let retornoSaida: string = '';
+            const funcaoDeRetorno = (saida: string) => retornoSaida = saida;
+            interpretador.funcaoDeRetorno = funcaoDeRetorno;
+            const resultadoLexador = lexador.mapear(['Atribua "123" a um texto.', 'Escreva esse texto.']);
+            const resultadoAvaliadorSintatico = avaliadorSintatico.analisar(resultadoLexador.simbolos);
+            await interpretador.interpretar(resultadoAvaliadorSintatico);
+
+            expect(retornoSaida).toBe("123");
+        });
     });
 });

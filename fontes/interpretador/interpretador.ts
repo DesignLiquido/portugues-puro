@@ -1,5 +1,7 @@
 import { Construto } from "../construtos/construto";
 import { Literal } from "../construtos/literal";
+import { ReferenciaContexto } from "../construtos/referencia-contexto";
+import { Atribua } from "../declaracoes/atribua";
 import { Declaracao } from "../declaracoes/declaracao";
 import { Escreva } from "../declaracoes/escreva";
 import { VisitanteComumInterface } from "../interfaces/visitante-comum-interface";
@@ -25,6 +27,7 @@ export class Interpretador implements VisitanteComumInterface {
             declaracoes: [],
             declaracaoAtual: 0,
             espacoVariaveis: new EspacoVariaveis(),
+            contexto: {},
             finalizado: false,
             tipo: 'outro',
             emLacoRepeticao: false
@@ -40,6 +43,10 @@ export class Interpretador implements VisitanteComumInterface {
             console.log('Aqui');
         } */
 
+        if (expressao instanceof ReferenciaContexto) {
+            return this.pilhaEscoposExecucao.obterConceitoEmContexto(expressao.conceito.lexema);
+        }
+        
         return await expressao.aceitar(this);
     }
 
@@ -54,6 +61,18 @@ export class Interpretador implements VisitanteComumInterface {
         }
 
         return formatoTexto.trimEnd();
+    }
+
+    async visitarDeclaracaoAtribua(declaracao: Atribua): Promise<any> {
+        const valorResolvido = declaracao.simboloLiteral.literal;
+        if (declaracao.nome) {
+            this.pilhaEscoposExecucao.atribuirVariavel(declaracao.nome, valorResolvido);
+        } else {
+            const topoDaPilha = this.pilhaEscoposExecucao.topoDaPilha();
+            topoDaPilha.contexto[declaracao.simboloTipo.lexema] = valorResolvido;
+        }
+
+        return Promise.resolve(valorResolvido);
     }
 
     async visitarDeclaracaoEscreva(declaracao: Escreva): Promise<any> {
@@ -144,6 +163,7 @@ export class Interpretador implements VisitanteComumInterface {
             declaracoes: declaracoes,
             declaracaoAtual: 0,
             espacoVariaveis: new EspacoVariaveis(),
+            contexto: {},
             finalizado: false,
             tipo: 'outro',
             emLacoRepeticao: false

@@ -1,0 +1,1 @@
+export type Contexto = {[ideia: string]: any}
