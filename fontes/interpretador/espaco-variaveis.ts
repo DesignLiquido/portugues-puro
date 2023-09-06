@@ -19,11 +19,6 @@ export class EspacoVariaveis {
     }
 
     /*
-    constructor() {
-        this.valores = {};
-        this.resolucoesChamadas = {};
-    }
-
     // Método para definir o valor de uma variável no espaço de variáveis
     public setVariavel(nome: string, valor: VariavelInterface): void {
         this.valores[nome] = valor;

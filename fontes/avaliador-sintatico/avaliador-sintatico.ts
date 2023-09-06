@@ -1,4 +1,6 @@
+import { Construto } from "../construtos/construto";
 import { Literal } from "../construtos/literal";
+import { ReferenciaContexto } from "../construtos/referencia-contexto";
 import { Atribua } from "../declaracoes/atribua";
 import { Axioma } from "../declaracoes/axioma";
 import { Declaracao } from "../declaracoes/declaracao";
@@ -70,16 +72,35 @@ export class AvaliadorSintatico {
     }
 
     private declaracaoEscreva(): Escreva {
-        const simboloInicial = this.simbolos[this.atual];
+        const simboloEscreva = this.simbolos[this.atual - 1];
 
-        const identificadorOuLiteral = this.consumir(tiposDeSimbolos.TEXTO, `Esperado um texto após "Escreva".`);
-
-        // TODO: Ponto final é opcional?
-        this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
+        let construtoArgumento: Construto;
+        switch (this.simbolos[this.atual].tipo) {
+            case tiposDeSimbolos.TEXTO:
+                const simboloIdentificadorOuLiteral = this.avancarEDevolverAnterior();
+                construtoArgumento = new Literal(simboloIdentificadorOuLiteral);
+                // TODO: Ponto final é opcional?
+                this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
+                break;
+            case tiposDeSimbolos.ESSE:
+            case tiposDeSimbolos.ESSA:
+                const referenciaConceito = this.avancarEDevolverAnterior();
+                const conceito = this.avancarEDevolverAnterior();
+                construtoArgumento = new ReferenciaContexto(
+                    simboloEscreva.linha,
+                    referenciaConceito,
+                    conceito
+                );
+                // TODO: Ponto final é opcional?
+                this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
+                break;
+            default:
+                throw this.erro(this.simbolos[this.atual], `Esperado ou um literal de texto, ou uma referência ao contexto, após "Escreva".`);
+        }
 
         return new Escreva(
-            simboloInicial.linha, [
-                new Literal(identificadorOuLiteral)
+            simboloEscreva.linha, [
+                construtoArgumento
             ]
         );
     }
