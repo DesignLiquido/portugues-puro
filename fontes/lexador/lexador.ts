@@ -30,6 +30,14 @@ export class Lexador {
         return caractere >= '0' && caractere <= '9';
     }
 
+    eBarra(caractere: string): boolean {
+        return caractere === '/';
+    }
+
+    eCifrao(caractere: string): boolean {
+        return caractere === '$';
+    }
+
     eAlfabeto(caractere: string): boolean {
         const acentuacoes = [
             'á',
@@ -158,6 +166,18 @@ export class Lexador {
                 this.adicionarSimbolo(tiposDeSimbolos.PONTO);
                 this.avancar();
                 break;
+            case ',':
+                this.adicionarSimbolo(tiposDeSimbolos.VÍRGULA);
+                this.avancar();
+                break;
+            case ';':
+                this.adicionarSimbolo(tiposDeSimbolos.PONTOEVIRGULA);
+                this.avancar();
+                break;
+            case '.':
+                this.adicionarSimbolo(tiposDeSimbolos.PONTO);
+                this.avancar();
+                break;
             case '"':
                 this.avancar();
                 this.analisarTexto('"');
@@ -168,13 +188,15 @@ export class Lexador {
             case '\0':
             case '\r':
             case '\t':
+            case '\n':
                 this.avancar();
                 break;
             default:
-                if (this.eDigito(caractere)) this.analisarNumero();
-                else if (this.eAlfabeto(caractere)) this.identificarPalavraChave();
+                if (this.eDigito(caractere)) {this.analisarNumero();} // se o caractere for um dígito, analisa o número.
+                // TODO: Adicionar suporte a números negativos, fracões e números mistos.
+                if (this.eAlfabeto(caractere)) this.identificarPalavraChave();
                 else {
-                    this.erros.push({
+                    this.erros.push({ // Se o caractere não for reconhecido, lança uma exceção.
                         linha: this.linha + 1,
                         caractere: caractere,
                         mensagem: 'Caractere inesperado.',

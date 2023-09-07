@@ -11,6 +11,7 @@ export class Escreva extends Declaracao {
     }
 
     async aceitar(visitante: VisitanteComumInterface): Promise<any> {
-        return await visitante.visitarDeclaracaoEscreva(this);
+        return await visitante.visitarDeclaracaoEscreva(this); 
+        // O método visitarDeclaracaoEscreva() recebe uma declaração Escreva como argumento e devolve um valor qualquer.
     }
 }
