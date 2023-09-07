@@ -10,7 +10,7 @@ export class Literal extends Construto {
 
     constructor(simboloLiteral: Simbolo) {
         super(simboloLiteral.linha);
-        this.valor = simboloLiteral.literal;
+        this.valor = simboloLiteral.literal; // Atribui o valor do literal ao atributo valor.
     }
 
     async aceitar(visitante: VisitanteComumInterface): Promise<any> {
