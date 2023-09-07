@@ -145,8 +145,7 @@ export class AvaliadorSintatico {
                 this.consumir((tiposDeSimbolos.ARTIGOS_INDEFINIDOS || tiposDeSimbolos.ARTIGOS_DEFINIDOS), `Esperado um símbolo do grupo 'ARTIGOS' após "para" em declaração "Atribua".`);
                 // Atribua 123 para um número. 
                 // Atribua o 456 para UM número. => Erro. Variável local [número] já declarada anteriormente.
-                //                    ^
-                //                    |
+                //                    ^^
                 const segundaReferenciaConceito = this.avancarEDevolverAnterior();
                 const segundoConceito = new ReferenciaContexto(segundaReferenciaConceito.linha, segundaReferenciaConceito, segundaReferenciaConceito);
 
