@@ -1,4 +1,5 @@
 import { Simbolo } from "../simbolo";
+import { Conceito } from "./conceito";
 import { ErroEmTempoDeExecucao } from "./erro-em-tempo-de-execucao";
 import { EscopoExecucao } from "./escopo-execucao";
 import { VariavelInterface } from "./variavel-interface";
@@ -188,7 +189,7 @@ export class PilhaEscoposExecucao {
         return todasVariaveis;
     }
 
-    obterConceitoEmContexto(nome: string) {
+    obterConceitoEmContexto(nome: string): Conceito {
         for (let i = 1; i <= this.pilha.length - 1; i++) {
             const contexto = this.pilha[this.pilha.length - i].contexto;
             if (contexto.hasOwnProperty(nome)) {
@@ -196,9 +197,15 @@ export class PilhaEscoposExecucao {
             }
         }
 
-        throw new ErroEmTempoDeExecucao(
+        // Conceito ainda não existe.
+        return {
+            nome,
+            valor: undefined
+        }
+
+        /* throw new ErroEmTempoDeExecucao(
             new Simbolo('especial', nome, nome, -1),
             "Conceito em contexto não definido: '" + nome + "'."
-        );
+        ); */
     }
 }

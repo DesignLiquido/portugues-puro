@@ -46,5 +46,20 @@ describe('Interpretador', () => {
 
             expect(retornoSaida).toBe("123");
         });
+
+        it('"Atribua 1 para um número. Atribua o número para uma contagem."', async () => {
+            let retornoSaida: string = '';
+            const funcaoDeRetorno = (saida: string) => retornoSaida = saida;
+            interpretador.funcaoDeRetorno = funcaoDeRetorno;
+            const resultadoLexador = lexador.mapear([
+                'Atribua 1 para um número.', 
+                'Atribua o número para uma contagem.',
+                'Escreva a contagem.'
+            ]);
+            const resultadoAvaliadorSintatico = avaliadorSintatico.analisar(resultadoLexador.simbolos);
+            await interpretador.interpretar(resultadoAvaliadorSintatico);
+
+            expect(retornoSaida).toBe("1");
+        });
     });
 });

@@ -64,12 +64,13 @@ export class Interpretador implements VisitanteComumInterface {
     }
 
     async visitarDeclaracaoAtribua(declaracao: Atribua): Promise<any> {
-        const valorResolvido = declaracao.valor.literal;
+        const valorResolvido = await this.avaliar(declaracao.valor);
         if (declaracao.nome) {
             this.pilhaEscoposExecucao.atribuirVariavel(declaracao.nome, valorResolvido);
         } else {
             const topoDaPilha = this.pilhaEscoposExecucao.topoDaPilha();
-            topoDaPilha.contexto[declaracao.simboloTipo.lexema] = valorResolvido;
+            const alvo = await this.avaliar(declaracao.conceitoAlvo);
+            topoDaPilha.contexto[alvo.nome] = valorResolvido;
         }
 
         return Promise.resolve(valorResolvido);
@@ -90,6 +91,11 @@ export class Interpretador implements VisitanteComumInterface {
 
     visitarExpressaoLiteral(expressao: Literal): Promise<any> {
         return Promise.resolve(expressao.valor);
+    }
+
+    visitarExpressaoReferenciaContexto(expressao: ReferenciaContexto): Promise<any> {
+        const valorEmContexto = this.pilhaEscoposExecucao.obterConceitoEmContexto(expressao.conceito.lexema);
+        return Promise.resolve(valorEmContexto);
     }
 
     private paraTexto(objeto: any): any {
