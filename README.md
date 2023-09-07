@@ -50,3 +50,19 @@ O resultado deste conjunto de instruções será, simplesmente:
 ```
 123
 ```
+
+### Instruções
+
+O projeto recomenda que você tenha instalado o Node.js® (versão 16 ou superior) e Yarn. 
+
+Após instalar o Node.js®, utilize o NPM para instalar o Yarn:
+
+```
+npm i -g yarn
+```
+
+após instalar o yarn, utilize o terminal para navegar até o diretório raiz do projeto e execute
+
+```
+yarn
+```
