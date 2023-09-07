@@ -60,7 +60,7 @@ export class AvaliadorSintatico {
         this.consumir(tiposDeSimbolos.VERBOS, `Esperado um símbolo do grupo 'VERBOS' após ${simboloDefinicao.lexema}`);
 
         if (!this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.ARTIGOS_INDEFINIDOS)) {
-            throw this.erro(this.simbolos[this.atual], `Esperado um símbolo do grupo 'ARTIGOS_INDEFINIDOS' após "é".`);
+            throw this.erro(this.simbolos[this.atual], `Esperado um símbolo do grupo 'ARTIGOS_INDEFINIDOS' após 'VERBO'.`);
         }
 
         const axiomaDefinidoPor = this.consumir(tiposDeSimbolos.IDENTIFICADOR, `Esperado um identificador após um símbolo do grupo 'ARTIGOS_INDEFINIDOS'.`);
@@ -75,10 +75,9 @@ export class AvaliadorSintatico {
 
         let construtoArgumento: Construto;
         switch (this.simbolos[this.atual].tipo) {
-            case tiposDeSimbolos.TEXTO:
+            case tiposDeSimbolos.TEXTO: // string literal
                 const simboloIdentificadorOuLiteral = this.avancarEDevolverAnterior();
                 construtoArgumento = new Literal(simboloIdentificadorOuLiteral);
-
                 break;
             case tiposDeSimbolos.ARTIGOS_DEFINIDOS:
             case tiposDeSimbolos.PRONOMES_DEMONSTRATIVOS_2A_PESSOA:                        
@@ -108,7 +107,11 @@ export class AvaliadorSintatico {
         const simboloIdentificadorOuLiteral = this.avancarEDevolverAnterior();
         const valor = new Literal(simboloIdentificadorOuLiteral);
         this.consumir(tiposDeSimbolos.PARA, `Esperado um símbolo do grupo 'PARA' após literal ou identificador em declaração "Atribua".`);
-        this.consumir(tiposDeSimbolos.ARTIGOS_INDEFINIDOS, `Esperado um símbolo do grupo 'ARTIGOS_INDEFINIDOS' após "para" em declaração "Atribua".`);
+        this.consumir((tiposDeSimbolos.ARTIGOS_INDEFINIDOS || tiposDeSimbolos.ARTIGOS_DEFINIDOS), `Esperado um símbolo do grupo 'ARTIGOS' após "para" em declaração "Atribua".`);
+        // Atribua 123 para um número. 
+        // Atribua o 456 para o número. -> reatribuição
+        //                    ^
+        //                    |
 
         const simboloTipoAtribuicao = this.avancarEDevolverAnterior();
         const tipoAtribuicao = new ReferenciaContexto(simboloTipoAtribuicao.linha, simboloTipoAtribuicao, simboloTipoAtribuicao);
