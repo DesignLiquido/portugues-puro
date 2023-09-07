@@ -2,7 +2,12 @@ import { VisitanteComumInterface } from '../interfaces/visitante-comum-interface
 import { Simbolo } from '../simbolo';
 import { Construto } from './construto';
 
-export type ValorLiteral = number | string | number[] | string[] | any;
+export type Fração = {
+    numerador: number,
+    denominador: number
+}
+
+export type ValorLiteral = number | string | number[] | string[] | Fração | any;
 
 export class Literal extends Construto {
     linha: number;
