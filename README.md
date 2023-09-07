@@ -31,11 +31,11 @@ Por exemplo, se temos as duas instruções abaixo:
 
 ```
 Atribua "123" a um texto.
-Escreva esse texto.
+Escreva este texto.
 ```
 
-`esse texto` se refere a um conceito dito anteriormente (`um texto`). Português Puro mantém esse contexto em memória, de forma que quando queremos escrever 
-o texto que foi mencionado anteriormente, sem exatamente definir um nome para ele, podemos fazê-lo. 
+Utulizamos a keyword `este` para fazermos referência à variável declarada no contexto local anterior (`um texto`). Português Puro mantém esse contexto em memória, de forma que quando queremos escrever 
+o texto que foi mencionado anteriormente, podemos fazê-lo. 
 
 O resultado deste conjunto de instruções será, simplesmente:
 
