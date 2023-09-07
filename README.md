@@ -34,8 +34,16 @@ Atribua "123" a um texto.
 Escreva este texto.
 ```
 
-Utulizamos a keyword `este` para fazermos referência à variável declarada no contexto local anterior (`um texto`). Português Puro mantém esse contexto em memória, de forma que quando queremos escrever 
+Podemos utilizar a keyword `este` para fazermos referência à variável declarada no contexto local anterior (`um texto`). Português Puro mantém esse contexto em memória, de forma que quando queremos escrever 
 o texto que foi mencionado anteriormente, podemos fazê-lo. 
+
+Outra opção igualmente válida seria:
+
+
+```
+Atribua "123" a um texto.
+Escreva o texto.
+```
 
 O resultado deste conjunto de instruções será, simplesmente:
 
