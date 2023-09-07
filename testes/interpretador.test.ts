@@ -61,5 +61,35 @@ describe('Interpretador', () => {
 
             expect(retornoSaida).toBe("1");
         });
+        /*
+        it('"Atribua 1/2 para uma fração."', async () => {
+            let retornoSaida: string = '';
+            const funcaoDeRetorno = (saida: string) => retornoSaida = saida;
+            interpretador.funcaoDeRetorno = funcaoDeRetorno;
+            const resultadoLexador = lexador.mapear([
+                'Atribua 1/2 para uma fração.', 
+                'Escreva a fração.'
+            ]);
+            const resultadoAvaliadorSintatico = avaliadorSintatico.analisar(resultadoLexador.simbolos);
+            await interpretador.interpretar(resultadoAvaliadorSintatico);
+
+            expect(retornoSaida).toBe("1/2");
+        });
+
+                it('"Atribua 1-1/2 para um número misto."', async () => {
+            let retornoSaida: string = '';
+            const funcaoDeRetorno = (saida: string) => retornoSaida = saida;
+            interpretador.funcaoDeRetorno = funcaoDeRetorno;
+            const resultadoLexador = lexador.mapear([
+                'Atribua 1-1/2 para um número mistoo.', 
+                'Escreva o número misto.'
+            ]);
+            const resultadoAvaliadorSintatico = avaliadorSintatico.analisar(resultadoLexador.simbolos);
+            await interpretador.interpretar(resultadoAvaliadorSintatico);
+
+            expect(retornoSaida).toBe("1-1/2"); // TODO: Verificar se podemos manter o traço nos números mistos ou se devemos substituir por um espaço
+        });
+
+        */
     });
 });
