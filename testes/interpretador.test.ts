@@ -7,18 +7,18 @@ describe('Interpretador', () => {
     let avaliadorSintatico: AvaliadorSintatico;
     let interpretador: Interpretador;
 
-    beforeEach(() => {
+    beforeEach(() => { // Realizado antes de cada teste
         lexador = new Lexador();
         avaliadorSintatico = new AvaliadorSintatico();
         interpretador = new Interpretador();
     });
 
-    describe('interpretar()', () => {
-        it('"Escreva "123"."', async () => {
+    describe('interpretar()', () => { // Agrupamento de testes
+        it('"Escreva "123"."', async () => { 
             let retornoSaida: string = '';
-            const funcaoDeRetorno = (saida: string) => retornoSaida = saida;
+            const funcaoDeRetorno = (saida: string) => retornoSaida = saida; 
             interpretador.funcaoDeRetorno = funcaoDeRetorno;
-            const resultadoLexador = lexador.mapear(['Escreva "123".']);
+            const resultadoLexador = lexador.mapear(['Escreva "123".']); 
             const resultadoAvaliadorSintatico = avaliadorSintatico.analisar(resultadoLexador.simbolos);
             await interpretador.interpretar(resultadoAvaliadorSintatico);
 
@@ -36,11 +36,11 @@ describe('Interpretador', () => {
             expect(retornoSaida).toBe("123");
         });
 
-        it('"Atribua "123" a um texto. Escreva esse texto."', async () => {
+        it('"Atribua "123" a um texto. Escreva o texto."', async () => {
             let retornoSaida: string = '';
             const funcaoDeRetorno = (saida: string) => retornoSaida = saida;
             interpretador.funcaoDeRetorno = funcaoDeRetorno;
-            const resultadoLexador = lexador.mapear(['Atribua "123" a um texto.', 'Escreva esse texto.']);
+            const resultadoLexador = lexador.mapear(['Atribua "123" a um texto.', 'Escreva o texto.']);
             const resultadoAvaliadorSintatico = avaliadorSintatico.analisar(resultadoLexador.simbolos);
             await interpretador.interpretar(resultadoAvaliadorSintatico);
 
