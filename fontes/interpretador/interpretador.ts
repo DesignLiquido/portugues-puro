@@ -64,7 +64,7 @@ export class Interpretador implements VisitanteComumInterface {
     }
 
     async visitarDeclaracaoAtribua(declaracao: Atribua): Promise<any> {
-        const valorResolvido = declaracao.simboloLiteral.literal;
+        const valorResolvido = declaracao.valor.literal;
         if (declaracao.nome) {
             this.pilhaEscoposExecucao.atribuirVariavel(declaracao.nome, valorResolvido);
         } else {

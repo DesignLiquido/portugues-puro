@@ -65,8 +65,6 @@ export class AvaliadorSintatico {
 
         const axiomaDefinidoPor = this.consumir(tiposDeSimbolos.IDENTIFICADOR, `Esperado um identificador após um símbolo do grupo 'ARTIGOS_INDEFINIDOS'.`);
 
-        // TODO: Ponto final é opcional? Não.
-        //this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
         this.consumir(tiposDeSimbolos.PONTO, `Esperado um símbolo do grupo 'PONTO' após "${axiomaDefinidoPor.lexema}".`);
 
         return new Axioma(simboloInicial.linha, simboloDefinicao, axiomaDefinidoPor);
@@ -80,8 +78,7 @@ export class AvaliadorSintatico {
             case tiposDeSimbolos.TEXTO:
                 const simboloIdentificadorOuLiteral = this.avancarEDevolverAnterior();
                 construtoArgumento = new Literal(simboloIdentificadorOuLiteral);
-                // TODO: Ponto final é opcional?
-                this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
+
                 break;
             case tiposDeSimbolos.ARTIGOS_DEFINIDOS:
             case tiposDeSimbolos.PRONOMES_DEMONSTRATIVOS_2A_PESSOA:                        
@@ -92,12 +89,13 @@ export class AvaliadorSintatico {
                     referenciaConceito,
                     conceito
                 );
-                // TODO: Ponto final é opcional?
-                this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
+
                 break;
             default:
                 throw this.erro(this.simbolos[this.atual], `Esperado ou um literal de texto, ou uma referência ao contexto, após "Escreva".`);
         }
+
+        this.consumir(tiposDeSimbolos.PONTO, "Esperado ponto final para finalizar expressão.");
 
         return new Escreva(
             simboloEscreva.linha, [
@@ -106,24 +104,53 @@ export class AvaliadorSintatico {
         );
     }
 
-    private declaracaoAtribua(): Atribua {
-        const simboloInicial = this.simbolos[this.atual];
-
-        const identificadorOuLiteral = this.consumir(tiposDeSimbolos.TEXTO, `Esperado um texto após "Atribua".`);
-
+    private declaracaoAtribuaPorLiteral(simboloInicial: Simbolo): Atribua {
+        const simboloIdentificadorOuLiteral = this.avancarEDevolverAnterior();
+        const valor = new Literal(simboloIdentificadorOuLiteral);
         this.consumir(tiposDeSimbolos.PARA, `Esperado um símbolo do grupo 'PARA' após literal ou identificador em declaração "Atribua".`);
         this.consumir(tiposDeSimbolos.ARTIGOS_INDEFINIDOS, `Esperado um símbolo do grupo 'ARTIGOS_INDEFINIDOS' após "para" em declaração "Atribua".`);
 
-        const tipoAtribuicao = this.avancarEDevolverAnterior();
+        const simboloTipoAtribuicao = this.avancarEDevolverAnterior();
+        const tipoAtribuicao = new ReferenciaContexto(simboloTipoAtribuicao.linha, simboloTipoAtribuicao, simboloTipoAtribuicao);
 
-        // TODO: Ponto final é opcional?
-        this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
+        this.consumir(tiposDeSimbolos.PONTO, "Esperado ponto final para finalizar expressão.");
 
         return new Atribua(
             simboloInicial.linha,
-            identificadorOuLiteral,
+            valor,
             tipoAtribuicao
         );
+    }
+
+    private declaracaoAtribua(): Atribua {
+        const simboloInicial = this.simbolos[this.atual - 1];
+
+        switch (this.simbolos[this.atual].tipo) {
+            case tiposDeSimbolos.NÚMERO:
+            case tiposDeSimbolos.TEXTO:
+                return this.declaracaoAtribuaPorLiteral(simboloInicial);
+            case tiposDeSimbolos.ARTIGOS_DEFINIDOS:
+                const referenciaConceito = this.avancarEDevolverAnterior();
+                const conceito = this.avancarEDevolverAnterior();
+                const valor = new ReferenciaContexto(
+                    simboloInicial.linha,
+                    referenciaConceito,
+                    conceito
+                );
+
+                this.consumir(tiposDeSimbolos.PARA, `Esperado um símbolo do grupo 'PARA' após literal ou identificador em declaração "Atribua".`);
+                this.consumir(tiposDeSimbolos.ARTIGOS_INDEFINIDOS, `Esperado um símbolo do grupo 'ARTIGOS_INDEFINIDOS' após "para" em declaração "Atribua".`);
+                const segundaReferenciaConceito = this.avancarEDevolverAnterior();
+                const segundoConceito = new ReferenciaContexto(segundaReferenciaConceito.linha, segundaReferenciaConceito, segundaReferenciaConceito);
+
+                this.consumir(tiposDeSimbolos.PONTO, "Esperado ponto final para finalizar expressão.");
+
+                return new Atribua(
+                    simboloInicial.linha,
+                    valor,
+                    segundoConceito
+                );
+        }
     }
 
     private resolverDeclaracao(): any {

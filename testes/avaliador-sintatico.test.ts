@@ -28,5 +28,11 @@ describe('Avaliador Sintático', () => {
             const resultado = avaliadorSintatico.analisar(resultadoLexador.simbolos);
             expect(resultado).toBeTruthy();
         });
+
+        it('"Atribua 1 para um número. Atribua o número para uma contagem."', () => {
+            const resultadoLexador = lexador.mapear(['Atribua 1 para um número.', 'Atribua o número para uma contagem.']);
+            const resultado = avaliadorSintatico.analisar(resultadoLexador.simbolos);
+            expect(resultado).toBeTruthy();
+        });
     });
 });
