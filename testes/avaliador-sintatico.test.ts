@@ -23,8 +23,8 @@ describe('Avaliador Sintático', () => {
             expect(resultado).toBeTruthy();
         });
 
-        it('"Atribua "123" a um texto. Escreva esse texto."', () => {
-            const resultadoLexador = lexador.mapear(['Atribua "123" a um texto.', 'Escreva esse texto.']);
+        it('"Atribua "123" a um texto. Escreva o texto."', () => {
+            const resultadoLexador = lexador.mapear(['Atribua "123" a um texto.', 'Escreva o texto.']);
             const resultado = avaliadorSintatico.analisar(resultadoLexador.simbolos);
             expect(resultado).toBeTruthy();
         });

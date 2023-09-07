@@ -27,12 +27,12 @@ export class AvaliadorSintatico {
     }
 
     private verificarTipoSimboloAtual(tipo: string): boolean {
-        if (this.atual >= this.simbolos.length) return false;
+        if (this.atual >= this.simbolos.length) return false; // Se não houver mais símbolos, não haverá como verificar o tipo do símbolo atual
         return this.simbolos[this.atual].tipo === tipo;
     }
 
-    private verificarSeSimboloAtualEIgualA(...argumentos: string[]): boolean {
-        for (let i = 0; i < argumentos.length; i++) {
+    private verificarSeSimboloAtualEIgualA(...argumentos: string[]): boolean { // Verifica se o tipo do símbolo atual é igual a algum dos tipos passados como argumento
+        for (let i = 0; i < argumentos.length; i++) { 
             const tipoAtual = argumentos[i];
             if (this.verificarTipoSimboloAtual(tipoAtual)) {
                 this.avancarEDevolverAnterior();
@@ -43,29 +43,29 @@ export class AvaliadorSintatico {
         return false;
     }
 
-    private avancarEDevolverAnterior(): Simbolo {
+    private avancarEDevolverAnterior(): Simbolo { // Avança o ponteiro de leitura e devolve o símbolo anterior
         if (this.atual < this.simbolos.length) this.atual += 1;
         return this.simbolos[this.atual - 1];
     }
 
-    private consumir(tipo: string, mensagemDeErro: string): Simbolo {
-        if (this.verificarTipoSimboloAtual(tipo)) return this.avancarEDevolverAnterior();
-        throw this.erro(this.simbolos[this.atual], mensagemDeErro);
+    private consumir(tipo: string, mensagemDeErro: string): Simbolo { // Verifica se o tipo do símbolo atual é igual ao tipo passado como argumento. 
+        if (this.verificarTipoSimboloAtual(tipo)) return this.avancarEDevolverAnterior(); // Se for, avança o ponteiro de leitura e devolve o símbolo anterior. 
+        throw this.erro(this.simbolos[this.atual], mensagemDeErro); // Se não for, lança uma exceção.
     }
 
-    private declaracaoAxioma(): Axioma {
+    private declaracaoAxioma(): Axioma { 
         const simboloInicial = this.simbolos[this.atual];
 
         const simboloDefinicao = this.consumir(tiposDeSimbolos.IDENTIFICADOR, `Esperado um identificador após "${simboloInicial.lexema}".`);
         this.consumir(tiposDeSimbolos.É, `Esperado "é" após ${simboloDefinicao.lexema}`);
 
         if (!this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.UM, tiposDeSimbolos.UMA)) {
-            throw this.erro(this.simbolos[this.atual], `Espero "um" ou "uma" após "é".`);
+            throw this.erro(this.simbolos[this.atual], `Esperado "um" ou "uma" após "é".`);
         }
 
         const axiomaDefinidoPor = this.consumir(tiposDeSimbolos.IDENTIFICADOR, `Esperado um identificador após "um"/"uma".`);
 
-        // TODO: Ponto final é opcional?
+        // TODO: Ponto final é opcional? Não.
         this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
 
         return new Axioma(simboloInicial.linha, simboloDefinicao, axiomaDefinidoPor);
