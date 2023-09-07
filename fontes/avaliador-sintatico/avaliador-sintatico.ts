@@ -109,7 +109,7 @@ export class AvaliadorSintatico {
         this.consumir(tiposDeSimbolos.PARA, `Esperado um símbolo do grupo 'PARA' após literal ou identificador em declaração "Atribua".`);
         this.consumir((tiposDeSimbolos.ARTIGOS_INDEFINIDOS || tiposDeSimbolos.ARTIGOS_DEFINIDOS), `Esperado um símbolo do grupo 'ARTIGOS' após "para" em declaração "Atribua".`);
         // Atribua 123 para um número. 
-        // Atribua o 456 para o número. -> reatribuição
+        // Atribua o 456 para O número. -> reatribuição do valor da variável local número, inicializada anteriormente com o valor 123.
         //                    ^
         //                    |
 
