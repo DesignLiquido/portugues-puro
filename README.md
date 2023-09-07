@@ -66,3 +66,9 @@ após instalar o yarn, utilize o terminal para navegar até o diretório raiz do
 ```
 yarn
 ```
+para instalar os pacotes e dependências do projeto.
+Para executar os testes unitários, execute
+
+```
+yarn testes-unitarios
+```
