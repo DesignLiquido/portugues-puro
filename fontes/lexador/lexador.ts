@@ -34,7 +34,7 @@ export class Lexador {
         return caractere === '/';
     }
 
-    eCifrao(caractere: string): boolean {
+    eCIFRÃO(caractere: string): boolean {
         return caractere === '$';
     }
 
@@ -171,7 +171,7 @@ export class Lexador {
                 this.avancar();
                 break;
             case ';':
-                this.adicionarSimbolo(tiposDeSimbolos.PONTOEVIRGULA);
+                this.adicionarSimbolo(tiposDeSimbolos.PONTO_E_VÍRGULA);
                 this.avancar();
                 break;
             case '.':

@@ -59,11 +59,11 @@ export class AvaliadorSintatico {
         const simboloDefinicao = this.consumir(tiposDeSimbolos.IDENTIFICADOR, `Esperado um identificador após "${simboloInicial.lexema}".`);
         this.consumir(tiposDeSimbolos.VERBOS, `Esperado um símbolo do grupo 'VERBOS' após ${simboloDefinicao.lexema}`);
 
-        if (!this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.ARTIGOSINDEFINIDOS)) {
-            throw this.erro(this.simbolos[this.atual], `Esperado um símbolo do grupo 'ARTIGOSINDEFINIDOS' após "é".`);
+        if (!this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.ARTIGOS_INDEFINIDOS)) {
+            throw this.erro(this.simbolos[this.atual], `Esperado um símbolo do grupo 'ARTIGOS_INDEFINIDOS' após "é".`);
         }
 
-        const axiomaDefinidoPor = this.consumir(tiposDeSimbolos.IDENTIFICADOR, `Esperado um identificador após um símbolo do grupo 'ARTIGOSINDEFINIDOS'.`);
+        const axiomaDefinidoPor = this.consumir(tiposDeSimbolos.IDENTIFICADOR, `Esperado um identificador após um símbolo do grupo 'ARTIGOS_INDEFINIDOS'.`);
 
         // TODO: Ponto final é opcional? Não.
         //this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
@@ -83,8 +83,8 @@ export class AvaliadorSintatico {
                 // TODO: Ponto final é opcional?
                 this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO);
                 break;
-            case tiposDeSimbolos.ARTIGOSDEFINIDOS:
-            case tiposDeSimbolos.PRONOMESDEMONSTRATIVOS2APESSOA:                        
+            case tiposDeSimbolos.ARTIGOS_DEFINIDOS:
+            case tiposDeSimbolos.PRONOMES_DEMONSTRATIVOS_2A_PESSOA:                        
                 const referenciaConceito = this.avancarEDevolverAnterior();
                 const conceito = this.avancarEDevolverAnterior();
                 construtoArgumento = new ReferenciaContexto(
@@ -112,7 +112,7 @@ export class AvaliadorSintatico {
         const identificadorOuLiteral = this.consumir(tiposDeSimbolos.TEXTO, `Esperado um texto após "Atribua".`);
 
         this.consumir(tiposDeSimbolos.PARA, `Esperado um símbolo do grupo 'PARA' após literal ou identificador em declaração "Atribua".`);
-        this.consumir(tiposDeSimbolos.ARTIGOSINDEFINIDOS, `Esperado um símbolo do grupo 'ARTIGOSINDEFINIDOS' após "para" em declaração "Atribua".`);
+        this.consumir(tiposDeSimbolos.ARTIGOS_INDEFINIDOS, `Esperado um símbolo do grupo 'ARTIGOS_INDEFINIDOS' após "para" em declaração "Atribua".`);
 
         const tipoAtribuicao = this.avancarEDevolverAnterior();
 
@@ -134,7 +134,7 @@ export class AvaliadorSintatico {
             case tiposDeSimbolos.ESCREVA:
                 this.avancarEDevolverAnterior();
                 return this.declaracaoEscreva();
-            case tiposDeSimbolos.ARTIGOSINDEFINIDOS:            
+            case tiposDeSimbolos.ARTIGOS_INDEFINIDOS:            
                 this.avancarEDevolverAnterior();
                 return this.declaracaoAxioma();
         }
