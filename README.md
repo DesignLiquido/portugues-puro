@@ -30,7 +30,7 @@ Como numa conversa entre duas ou mais pessoas, há a construção de um contexto
 Por exemplo, se temos as duas instruções abaixo:
 
 ```
-Atribua "123" a um texto.
+Atribua "123" para um texto.
 Escreva este texto.
 ```
 
@@ -41,7 +41,7 @@ Outra opção igualmente válida seria:
 
 
 ```
-Atribua "123" a um texto.
+Atribua "123" para um texto.
 Escreva o texto.
 ```
 
