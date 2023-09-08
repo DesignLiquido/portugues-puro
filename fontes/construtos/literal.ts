@@ -7,7 +7,11 @@ export type Fração = {
     denominador: number
 }
 
-export type ValorLiteral = number | string | number[] | string[] | Fração | any;
+export type NumeroHexadecimal = {    
+    valor: string // Valor do número hexadecimal, armazenado como string
+}
+
+export type ValorLiteral = number | string | number[] | string[] | Fração | NumeroHexadecimal | any;
 
 export class Literal extends Construto {
     linha: number;
