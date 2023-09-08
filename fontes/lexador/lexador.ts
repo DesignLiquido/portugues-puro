@@ -26,19 +26,23 @@ export class Lexador {
         this.inicioSimbolo = 0;
     }
 
-    eDigito(caractere: string): boolean {
+    private éDigitoBase10(caractere: string): boolean {
         return caractere >= '0' && caractere <= '9';
     }
 
-    eBarra(caractere: string): boolean {
+    private éDigitoBase16(caractere: string): boolean {
+        return caractere >= '0' && caractere <= 'F';
+    }
+
+    private éBarra(caractere: string): boolean {
         return caractere === '/';
     }
 
-    eCIFRÃO(caractere: string): boolean {
+    private éCifrão(caractere: string): boolean {
         return caractere === '$';
     }
 
-    eAlfabeto(caractere: string): boolean {
+    private éAlfabeto(caractere: string): boolean {
         const acentuacoes = [
             'á',
             'Á',
@@ -74,11 +78,11 @@ export class Lexador {
         );
     }
 
-    eAlfabetoOuDigito(caractere: any): boolean {
-        return this.eDigito(caractere) || this.eAlfabeto(caractere);
+    private éAlfabetoOuDigito(caractere: any): boolean {
+        return this.éDigitoBase10(caractere) || this.éAlfabeto(caractere);
     }
 
-    eFinalDaLinha(): boolean {
+    private éFinalDaLinha(): boolean {
         if (this.codigo.length === this.linha) {
             return true;
         }
@@ -90,51 +94,70 @@ export class Lexador {
      * @returns Verdadeiro se contador de linhas está na última linha.
      *          Falso caso contrário.
      */
-    eUltimaLinha(): boolean {
+    private éUltimaLinha(): boolean {
         return this.linha >= this.codigo.length - 1;
     }
 
-    eFinalDoCodigo(): boolean {
-        return this.eUltimaLinha() && this.codigo[this.codigo.length - 1].length <= this.atual;
+    private éFinalDoCodigo(): boolean {
+        return this.éUltimaLinha() && this.codigo[this.codigo.length - 1].length <= this.atual;
     }
 
-    avancar(): void {
+    private avançar(): void {
         this.atual += 1;
-        if (this.eFinalDaLinha() && !this.eUltimaLinha()) {
+        if (this.éFinalDaLinha() && !this.éUltimaLinha()) {
             this.linha++;
             this.atual = 0;
         }
     }
 
-    adicionarSimbolo(tipo: string, literal: any = null): void {
+    private adicionarSímbolo(tipo: string, literal: any = null): void {
         const texto: string = this.codigo[this.linha].substring(this.inicioSimbolo, this.atual);
         this.simbolos.push(new Simbolo(tipo, literal || texto, literal, this.linha + 1));
     }
 
-    analisarNumero(): void {
-        while (this.eDigito(this.codigo[this.linha][this.atual])) {
-            this.avancar();
+    private analisarHexadecimal(): void {
+        while (this.éDigitoBase16(this.codigo[this.linha][this.atual])) {
+            this.avançar();
         }
 
-        if (this.codigo[this.linha][this.atual] == '.' && this.eDigito(this.codigo[this.linha][this.atual + 1])) {
-            this.avancar();
+        // TODO: Vai ter parte decimal?
+        /* if (this.codigo[this.linha][this.atual] == '.' && this.éDigitoBase16(this.codigo[this.linha][this.atual + 1])) {
+            this.avançar();
 
-            while (this.eDigito(this.codigo[this.linha][this.atual])) {
-                this.avancar();
+            while (this.éDigitoBase10(this.codigo[this.linha][this.atual])) {
+                this.avançar();
+            }
+        } */
+
+        const numeroCompleto = this.codigo[this.linha].substring(this.inicioSimbolo + 1, this.atual);
+
+        this.adicionarSímbolo(tiposDeSimbolos.HEXADECIMAL, parseFloat(numeroCompleto));
+    }
+
+    private analisarNúmeroBase10(): void {
+        while (this.éDigitoBase10(this.codigo[this.linha][this.atual])) {
+            this.avançar();
+        }
+
+        if (this.codigo[this.linha][this.atual] == '.' && this.éDigitoBase10(this.codigo[this.linha][this.atual + 1])) {
+            this.avançar();
+
+            while (this.éDigitoBase10(this.codigo[this.linha][this.atual])) {
+                this.avançar();
             }
         }
 
         const numeroCompleto = this.codigo[this.linha].substring(this.inicioSimbolo, this.atual);
 
-        this.adicionarSimbolo(tiposDeSimbolos.NÚMERO, parseFloat(numeroCompleto));
+        this.adicionarSímbolo(tiposDeSimbolos.NÚMERO, parseFloat(numeroCompleto));
     }
 
-    analisarTexto(delimitador = '"'): void {
-        while (this.codigo[this.linha][this.atual] !== delimitador && !this.eFinalDoCodigo()) {
-            this.avancar();
+    private analisarTexto(delimitador = '"'): void {
+        while (this.codigo[this.linha][this.atual] !== delimitador && !this.éFinalDoCodigo()) {
+            this.avançar();
         }
 
-        if (this.eFinalDoCodigo()) {
+        if (this.éFinalDoCodigo()) {
             this.erros.push({
                 linha: this.linha + 1,
                 caractere: this.codigo[this.linha][this.atual - 1],
@@ -144,44 +167,47 @@ export class Lexador {
         }
 
         const valor = this.codigo[this.linha].substring(this.inicioSimbolo + 1, this.atual);
-        this.adicionarSimbolo(tiposDeSimbolos.TEXTO, valor);
+        this.adicionarSímbolo(tiposDeSimbolos.TEXTO, valor);
     }
 
-    identificarPalavraChave(): void {
-        while (this.eAlfabetoOuDigito(this.codigo[this.linha][this.atual])) {
-            this.avancar();
+    private identificarPalavraChave(): void {
+        while (this.éAlfabetoOuDigito(this.codigo[this.linha][this.atual])) {
+            this.avançar();
         }
 
         const codigo: string = this.codigo[this.linha].substring(this.inicioSimbolo, this.atual).toUpperCase();
         const tipo: string = codigo in palavrasReservadas ? palavrasReservadas[codigo] : tiposDeSimbolos.IDENTIFICADOR;
 
-        this.adicionarSimbolo(tipo);
+        this.adicionarSímbolo(tipo);
     }
 
-    analisarCaractereAtual(): void {
+    private analisarCaractereAtual(): void {
         const caractere = this.codigo[this.linha][this.atual];
 
         switch (caractere) {
             case '.':
-                this.adicionarSimbolo(tiposDeSimbolos.PONTO);
-                this.avancar();
+                this.adicionarSímbolo(tiposDeSimbolos.PONTO);
+                this.avançar();
                 break;
             case ',':
-                this.adicionarSimbolo(tiposDeSimbolos.VÍRGULA);
-                this.avancar();
+                this.adicionarSímbolo(tiposDeSimbolos.VÍRGULA);
+                this.avançar();
                 break;
             case ';':
-                this.adicionarSimbolo(tiposDeSimbolos.PONTO_E_VÍRGULA);
-                this.avancar();
+                this.adicionarSímbolo(tiposDeSimbolos.PONTO_E_VÍRGULA);
+                this.avançar();
                 break;
             case '.':
-                this.adicionarSimbolo(tiposDeSimbolos.PONTO);
-                this.avancar();
+                this.adicionarSímbolo(tiposDeSimbolos.PONTO);
+                this.avançar();
+                break;
+            case '$':
+                this.analisarHexadecimal();
                 break;
             case '"':
-                this.avancar();
+                this.avançar();
                 this.analisarTexto('"');
-                this.avancar();
+                this.avançar();
                 break;
             // Esta sessão ignora espaços em branco.
             case ' ':
@@ -189,19 +215,19 @@ export class Lexador {
             case '\r':
             case '\t':
             case '\n':
-                this.avancar();
+                this.avançar();
                 break;
             default:
-                if (this.eDigito(caractere)) {this.analisarNumero();} // se o caractere for um dígito, analisa o número.
+                if (this.éDigitoBase10(caractere)) {this.analisarNúmeroBase10();} // se o caractere for um dígito, analisa o número.
                 // TODO: Adicionar suporte a números negativos, fracões e números mistos.
-                if (this.eAlfabeto(caractere)) this.identificarPalavraChave();
+                if (this.éAlfabeto(caractere)) this.identificarPalavraChave();
                 else {
                     this.erros.push({ // Se o caractere não for reconhecido, lança uma exceção.
                         linha: this.linha + 1,
                         caractere: caractere,
                         mensagem: 'Caractere inesperado.',
                     } as ErroLexador);
-                    this.avancar();
+                    this.avançar();
                 }
         }
     }
@@ -214,7 +240,7 @@ export class Lexador {
         this.atual = 0;
         this.linha = 0;
 
-        while (!this.eFinalDoCodigo()) {
+        while (!this.éFinalDoCodigo()) {
             this.inicioSimbolo = this.atual;
             this.analisarCaractereAtual();
         }

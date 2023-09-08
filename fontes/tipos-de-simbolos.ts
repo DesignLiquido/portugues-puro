@@ -59,6 +59,7 @@ export default {
     ESTRUTURAS: "ESTRUTURAS",
     FOI: "FOI",
     FOR: "FOR",
+    HEXADECIMAL: "HEXADECIMAL",
     IDENTIFICADOR: "IDENTIFICADOR",
     IGUAL: "IGUAL",
     NÃO: "NÃO",
