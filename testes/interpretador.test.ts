@@ -61,6 +61,22 @@ describe('Interpretador', () => {
 
             expect(retornoSaida).toBe("1");
         });
+
+        it.skip('"Atribua $4D2 para um número hexadecimal."', async () => {
+            let retornoSaida: string = '';
+            const funcaoDeRetorno = (saida: string) => retornoSaida = saida;
+            interpretador.funcaoDeRetorno = funcaoDeRetorno;
+            const resultadoLexador = lexador.mapear([
+                'Atribua $4D2 para um número hexadecimal.', 
+                'Converta o número hexadecimal para um número decimal.',
+                'Escreva o número decimal.'
+            ]);
+            const resultadoAvaliadorSintatico = avaliadorSintatico.analisar(resultadoLexador.simbolos);
+            await interpretador.interpretar(resultadoAvaliadorSintatico);
+
+            expect(retornoSaida).toBe("1234");
+        });
+
         /*
         it('"Atribua 1/2 para uma fração."', async () => {
             let retornoSaida: string = '';
@@ -78,20 +94,7 @@ describe('Interpretador', () => {
 
         
 
-        it('"Atribua $4D2 para um número hexadecimal."', async () => {
-            let retornoSaida: string = '';
-            const funcaoDeRetorno = (saida: string) => retornoSaida = saida;
-            interpretador.funcaoDeRetorno = funcaoDeRetorno;
-            const resultadoLexador = lexador.mapear([
-                'Atribua $4D2 para um número hexadecimal.', 
-                'Converta o número hexadecimal para um número decimal.'
-                'Escreva o número decimal.'
-            ]);
-            const resultadoAvaliadorSintatico = avaliadorSintatico.analisar(resultadoLexador.simbolos);
-            await interpretador.interpretar(resultadoAvaliadorSintatico);
-
-            expect(retornoSaida).toBe("1/2");
-        });
+        
 
         it('"Atribua 1-1/2 para um número misto."', async () => {
             let retornoSaida: string = '';
