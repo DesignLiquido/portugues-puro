@@ -113,15 +113,33 @@ export class AvaliadorSintatico {
         //                    ^
         //                    |
 
-        const simboloTipoAtribuicao = this.avancarEDevolverAnterior();
-        const tipoAtribuicao = new ReferenciaContexto(simboloTipoAtribuicao.linha, simboloTipoAtribuicao, simboloTipoAtribuicao);
+        const simboloAlvoAtribuicao = this.avancarEDevolverAnterior();
+        let alvoAtribuicao;
+        if (this.verificarTipoSimboloAtual(tiposDeSimbolos.IDENTIFICADOR)) {
+            switch (this.simbolos[this.atual].lexema.toLowerCase()) {
+                case 'hexadecimal':
+                    const tipoHexadecimal = this.avancarEDevolverAnterior();
+                    alvoAtribuicao = new ReferenciaContexto(
+                        simboloAlvoAtribuicao.linha, 
+                        simboloAlvoAtribuicao, 
+                        simboloAlvoAtribuicao,
+                        tipoHexadecimal
+                    );
+                    
+                    break;
+                default:
+                    throw this.erro(this.simbolos[this.atual], `Tipo de dados inválido para alvo da atribuição: ${this.simbolos[this.atual].lexema}.`);
+            }
+        } else {
+            alvoAtribuicao = new ReferenciaContexto(simboloAlvoAtribuicao.linha, simboloAlvoAtribuicao, simboloAlvoAtribuicao);
+        }
 
         this.consumir(tiposDeSimbolos.PONTO, "Esperado ponto final para finalizar expressão.");
 
         return new Atribua(
             simboloInicial.linha,
             valor,
-            tipoAtribuicao
+            alvoAtribuicao
         );
     }
 
@@ -129,6 +147,7 @@ export class AvaliadorSintatico {
         const simboloInicial = this.simbolos[this.atual - 1];
 
         switch (this.simbolos[this.atual].tipo) {
+            case tiposDeSimbolos.HEXADECIMAL:
             case tiposDeSimbolos.NÚMERO:
             case tiposDeSimbolos.TEXTO:
                 return this.declaracaoAtribuaPorLiteral(simboloInicial);
@@ -173,6 +192,11 @@ export class AvaliadorSintatico {
         }
     }
 
+    /**
+     * O ponto de entrada para a avaliação sintática.
+     * @param simbolos Um vetor de símbolos montada pelo Lexador.
+     * @returns Um vetor de declarações de alto nível.
+     */
     analisar(simbolos: Simbolo[]) {
         this.erros = [];
         this.atual = 0;

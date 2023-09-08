@@ -202,6 +202,10 @@ export class Lexador {
                 this.adicionarSímbolo(tiposDeSimbolos.PONTO);
                 this.avançar();
                 break;
+            case '/':
+                this.adicionarSímbolo(tiposDeSimbolos.BARRA);
+                this.avançar();
+                break;
             case '$':
                 this.analisarHexadecimal();
                 break;
@@ -220,7 +224,7 @@ export class Lexador {
                 break;
             default:
                 if (this.éDigitoBase10(caractere)) {this.analisarNúmeroBase10();} // se o caractere for um dígito, analisa o número.
-                // TODO: Adicionar suporte a números negativos, fracões e números mistos.
+                // TODO: Adicionar suporte a números negativos, frações e números mistos.
                 if (this.éAlfabeto(caractere)) this.identificarPalavraChave();
                 else {
                     this.erros.push({ // Se o caractere não for reconhecido, lança uma exceção.

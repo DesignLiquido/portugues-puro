@@ -34,6 +34,13 @@ describe('Avaliador Sintático', () => {
             const resultado = avaliadorSintatico.analisar(resultadoLexador.simbolos);
             expect(resultado).toBeTruthy();
         });
+
+        it('"Atribua $4D2 para um número hexadecimal."', () => {
+            const resultadoLexador = lexador.mapear(["Atribua $4D2 para um número hexadecimal."]);
+            const resultado = avaliadorSintatico.analisar(resultadoLexador.simbolos);
+            expect(resultado).toBeTruthy(); 
+        });
+        
         /*
         it('"Atribua $4D2 para um número hexadecimal. Converta o número hexadecimal para um número decimal. Escreva o número decimal."', () => {
             const resultadoLexador = lexador.mapear(['Atribua $4D2 para um número hexadecimal. Converta o número hexadecimal para um número decimal. Escreva o número decimal.']);

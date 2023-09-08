@@ -1,4 +1,5 @@
 export type Conceito = {
     nome: string,
-    valor: any
+    valor: any,
+    tipo?: any
 }
