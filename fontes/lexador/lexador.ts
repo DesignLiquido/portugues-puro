@@ -116,6 +116,7 @@ export class Lexador {
     }
 
     private analisarHexadecimal(): void {
+        this.avançar();
         while (this.éDigitoBase16(this.codigo[this.linha][this.atual])) {
             this.avançar();
         }
@@ -129,9 +130,9 @@ export class Lexador {
             }
         } */
 
-        const numeroCompleto = this.codigo[this.linha].substring(this.inicioSimbolo + 1, this.atual);
+        const hexadecimalCompleto = this.codigo[this.linha].substring(this.inicioSimbolo + 1, this.atual);
 
-        this.adicionarSímbolo(tiposDeSimbolos.HEXADECIMAL, parseFloat(numeroCompleto));
+        this.adicionarSímbolo(tiposDeSimbolos.HEXADECIMAL, parseFloat(hexadecimalCompleto));
     }
 
     private analisarNúmeroBase10(): void {
