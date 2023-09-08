@@ -34,11 +34,9 @@ Atribua "123" para um texto.
 Escreva este texto.
 ```
 
-Podemos utilizar a keyword `este` para fazermos referência à variável declarada no contexto local anterior (`um texto`). Português Puro mantém esse contexto em memória, de forma que quando queremos escrever 
-o texto que foi mencionado anteriormente, podemos fazê-lo. 
+Podemos utilizar a palavra-chave `este` para fazermos referência à variável declarada no contexto local anterior (`um texto`). Português Puro mantém esse contexto em memória, de forma que quando queremos escrever o texto que foi mencionado anteriormente, podemos fazê-lo. 
 
 Outra opção igualmente válida seria:
-
 
 ```
 Atribua "123" para um texto.
@@ -53,25 +51,31 @@ O resultado deste conjunto de instruções será, simplesmente:
 
 ### Instruções
 
-O projeto recomenda que você tenha instalado o Node.js® (versão 16 ou superior) e Yarn. 
+O projeto recomenda que você tenha instalado o [Node.js®](https://nodejs.org/pt-br) (versão 16 ou superior) e o gerenciador de pacotes [Yarn](https://yarnpkg.com). 
 
-Após instalar o Node.js®, utilize o NPM para instalar o Yarn:
+Após instalar o Node.js®, utilize o [NPM](https://docs.npmjs.com/about-npm), que vem com o Node.js, para instalar o Yarn:
 
 ```
 npm i -g yarn
 ```
 
-após instalar o yarn, utilize o terminal para navegar até o diretório raiz do projeto e execute
+após instalar o Yarn, utilize o terminal para navegar até o diretório raiz do projeto e execute:
 
 ```
 yarn
 ```
+
 para instalar os pacotes e dependências do projeto.
 
 
-Execute
+#### Testes unitários
+
+Execute:
 
 ```
 yarn testes-unitarios
 ```
+
 para rodar os testes unitários.
+
+Os relatórios de cobertura de código ficam no diretório `/coverage/lcov-report/index.html`.
