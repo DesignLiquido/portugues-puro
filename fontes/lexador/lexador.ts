@@ -34,14 +34,6 @@ export class Lexador {
         return caractere >= '0' && caractere <= 'F';
     }
 
-    private éBarra(caractere: string): boolean {
-        return caractere === '/';
-    }
-
-    private éCifrão(caractere: string): boolean {
-        return caractere === '$';
-    }
-
     private éAlfabeto(caractere: string): boolean {
         const acentuacoes = [
             'á',
@@ -196,10 +188,6 @@ export class Lexador {
                 break;
             case ';':
                 this.adicionarSímbolo(tiposDeSimbolos.PONTO_E_VÍRGULA);
-                this.avançar();
-                break;
-            case '.':
-                this.adicionarSímbolo(tiposDeSimbolos.PONTO);
                 this.avançar();
                 break;
             case '/':
