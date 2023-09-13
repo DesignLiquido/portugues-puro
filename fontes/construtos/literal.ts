@@ -14,7 +14,6 @@ export type NumeroHexadecimal = {
 export type ValorLiteral = number | string | number[] | string[] | Fração | NumeroHexadecimal | any;
 
 export class Literal extends Construto {
-    linha: number;
     valor: ValorLiteral;
 
     constructor(simboloLiteral: Simbolo) {

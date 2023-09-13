@@ -18,6 +18,7 @@ export class AvaliadorSintatico {
 
     constructor() {
         this.erros = [];
+        this.simbolos = [];
         this.atual = 0;
     }
 
