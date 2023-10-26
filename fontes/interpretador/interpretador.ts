@@ -44,20 +44,20 @@ export class Interpretador implements VisitanteComumInterface {
         } */
 
         if (expressao instanceof ReferenciaContexto) {
-            return this.pilhaEscoposExecucao.obterConceitoEmContexto(expressao.conceito.lexema);
+            return this.pilhaEscoposExecucao.obterConceitoEmContexto(expressao.conceito.lexema);  // Retorna o valor da variável.
         }
         
-        return await expressao.aceitar(this);
+        return await expressao.aceitar(this); // Retorna o valor da expressão.
     }
 
     private async avaliarArgumentosEscreva(argumentos: Construto[]): Promise<string> {
         let formatoTexto: string = '';
 
         for (const argumento of argumentos) {
-            const resultadoAvaliacao = await this.avaliar(argumento);
-            let valor = resultadoAvaliacao?.hasOwnProperty('valor') ? resultadoAvaliacao.valor : resultadoAvaliacao;
+            const resultadoAvaliacao = await this.avaliar(argumento); // Avalia o argumento.
+            let valor = resultadoAvaliacao?.hasOwnProperty('valor') ? resultadoAvaliacao.valor : resultadoAvaliacao; // Obtém o valor do argumento.
 
-            formatoTexto += `${this.paraTexto(valor)} `;
+            formatoTexto += `${this.paraTexto(valor)} `; // Converte o valor do argumento para texto e concatena com o formato.
         }
 
         return formatoTexto.trimEnd();
@@ -65,12 +65,12 @@ export class Interpretador implements VisitanteComumInterface {
 
     async visitarDeclaracaoAtribua(declaracao: Atribua): Promise<any> {
         const valorResolvido = await this.avaliar(declaracao.valor);
-        if (declaracao.nome) {
-            this.pilhaEscoposExecucao.atribuirVariavel(declaracao.nome, valorResolvido);
+        if (declaracao.nome) { // Se a declaração tiver um nome ao invés de um valor literal, 
+            this.pilhaEscoposExecucao.atribuirVariavel(declaracao.nome, valorResolvido); // atribui o valor à variável.
         } else {
-            const topoDaPilha = this.pilhaEscoposExecucao.topoDaPilha();
-            const alvo = await this.avaliar(declaracao.conceitoAlvo);
-            topoDaPilha.contexto[alvo.nome] = valorResolvido;
+            const topoDaPilha = this.pilhaEscoposExecucao.topoDaPilha(); // Obtém o escopo de execução atual.
+            const alvo = await this.avaliar(declaracao.conceitoAlvo); // Obtém o conceito alvo da atribuição.
+            topoDaPilha.contexto[alvo.nome] = valorResolvido; // Atribui o valor à propriedade do contexto.
         }
 
         return Promise.resolve(valorResolvido);
