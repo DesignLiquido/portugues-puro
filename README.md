@@ -9,19 +9,19 @@ instrumentar a linguagem natural para executar algoritmos que um computador poss
 
 ## Definições
 
-### Instrução
+### Declaração de tipos
 
-Uma instrução é uma frase em português que ensina algo ao motor da linguagem. Por exemplo:
+Uma declaração é uma frase em português que ensina algo ao motor da linguagem. Por exemplo:
 
 ```
 Uma contagem é um número.
 ```
 
-Aqui definimos um conceito (`contagem`) e dizemos que esse conceito tem um tipo de dados (`um número`). Essa construção é chamada de Axioma. 
+Aqui definimos um novo tipo derivado (`contagem`) e dizemos que esse tipo é derivado de um tipo base (`número`). Essa construção é chamada de Axioma. 
 
 Axiomas são detalhados mais abaixo.
 
-Em Português Puro, cada instrução deve ser finalizada com um ponto final.
+Em Português Puro, cada declaração deve ser finalizada com um ponto final.
 
 ### Contexto
 
@@ -30,28 +30,21 @@ Como numa conversa entre duas ou mais pessoas, há a construção de um contexto
 Por exemplo, se temos as duas instruções abaixo:
 
 ```
-Atribua "123" para um texto.
-Escreva este texto.
+Atribua "João" para um texto denominado nome.
+Escreva o nome.
 ```
 
-Podemos utilizar a palavra-chave `este` para fazermos referência à variável declarada no contexto local anterior (`um texto`). Português Puro mantém esse contexto em memória, de forma que quando queremos escrever o texto que foi mencionado anteriormente, podemos fazê-lo. 
-
-Outra opção igualmente válida seria:
-
-```
-Atribua "123" para um texto.
-Escreva o texto.
-```
+Podemos utilizar o artigo definido `o` para fazermos referência à variável declarada no contexto local anterior (`nome`). Português Puro mantém esse contexto em memória, de forma que quando queremos escrever o texto que foi mencionado anteriormente, podemos fazê-lo. 
 
 O resultado deste conjunto de instruções será, simplesmente:
 
 ```
-123
+João
 ```
 
 ### Instruções
 
-O projeto recomenda que você tenha instalado o [Node.js®](https://nodejs.org/pt-br) (versão 16 ou superior) e o gerenciador de pacotes [Yarn](https://yarnpkg.com). 
+É necessário instalar o [Node.js®](https://nodejs.org/pt-br) (versão 16 ou superior) e o gerenciador de pacotes [Yarn](https://yarnpkg.com). 
 
 Após instalar o Node.js®, utilize o [NPM](https://docs.npmjs.com/about-npm), que vem com o Node.js, para instalar o Yarn:
 
