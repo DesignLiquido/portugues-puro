@@ -25,16 +25,16 @@ Em Português Puro, cada declaração deve ser finalizada com um ponto final.
 
 ### Contexto
 
-Como numa conversa entre duas ou mais pessoas, há a construção de um contexto de ideias. Esse contexto de ideias é implementado em Português Puro. 
+De forma similar a uma conversa entre duas ou mais pessoas, existe a construção de um contexto de ideias. Esse contexto de ideias é implementado em Português Puro. 
 
 Por exemplo, se temos as duas instruções abaixo:
 
 ```
-Atribua "João" para um texto denominado nome.
+Atribua "João" para uma string denominada nome.
 Escreva o nome.
 ```
 
-Podemos utilizar o artigo definido `o` para fazermos referência à variável declarada no contexto local anterior (`nome`). Português Puro mantém esse contexto em memória, de forma que quando queremos escrever o texto que foi mencionado anteriormente, podemos fazê-lo. 
+Podemos utilizar o artigo definido `o` para fazermos referência à variável local declarada na instrução anterior (`nome`). O interpretador de Português Puro mantém essa variável na memória, de forma que quando queremos escrever a string que foi mencionada anteriormente, podemos fazê-lo. 
 
 O resultado deste conjunto de instruções será, simplesmente:
 
